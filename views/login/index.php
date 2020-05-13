@@ -55,6 +55,12 @@ use yii\bootstrap\ActiveForm;
                     Создайте учетную запись
                 </a>
             </div>
+
+            <div class="text-center w-full p-t-10">
+                <a class="txt1 bo1 hov1" href="/site/send-email">
+                    Забыли пароль
+                </a>
+            </div>
             <?php ActiveForm::end();  ?>
         </div>
     </div>

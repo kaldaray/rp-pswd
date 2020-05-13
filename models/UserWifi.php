@@ -27,8 +27,13 @@ class UserWifi extends ActiveRecord
             'nameWifi`' => 'Имя точки доступа',
             'passwordWifi' => 'Пароль',
             'nameUser' => 'Имя пользователя',
-            'typeSecurity' => 'Тип защиты'
+            'typeSecurity' => 'Тип защиты',
+            'startPage' => 'Стартовая страница'
         ];
+    }
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['id' => 'id_user']);
     }
 
 }

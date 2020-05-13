@@ -9,19 +9,24 @@ body {
     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
 }
 .wrap {
-    height: auto;
+    height: 100%;
+    width: 100%;
     margin: 0 auto -60px;
     /*padding: 0 0 60px;*/
 }
 
+.container {
+    height: 100%;
+}
 footer {
     background-color: #232a3f;
     border-top: 1px solid #ddd;
     color: #8892af;
     padding-top: 30px;
-    position: absolute;
-    left: 0;
-    right: 0;
+    /* position: absolute; */
+    /* left: 0; */
+    /* right: 0; */
+    /*margin-top: 35px;*/
 }
 #main-footer{
     flex: 0 0 auto;
@@ -185,7 +190,7 @@ a.desc:after {
 }
 
 .far {
-    padding-left: 20px;
+    /*padding-left: 20px;*/
     transform: scale(1.5,1.5); }
 .btn-create{
     margin-top: 10px;
@@ -206,4 +211,67 @@ a.desc:after {
 .thumbnail:hover {
     cursor: pointer;
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 1);
+}
+
+.size {
+    white-space: nowrap; /* Отменяем перенос текста */
+    overflow: hidden; /* Обрезаем содержимое */
+    padding: 5px; /* Поля */
+    text-overflow: ellipsis; /* Многоточие */
+}
+.thumbnail-label h4{
+    font-size: 22px;
+}
+.margin-top{
+    margin-top: 10px;
+}
+
+.btn-right{
+    float: right;
+}
+.close{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 55px;
+    height: 55px;
+}
+
+.close:before,
+.close:after {
+    position: absolute;
+    top: 21px;
+    left: 10px;
+    width: 26px;
+    height: 4px;
+    background: #e62f57;
+}
+
+.close:before {
+    webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.close:after {
+    webkit-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+}
+.form-group {
+    margin-bottom: 35px;
+}
+.form-group a.btn-success {
+    right: 0;
+    float: left;
+}
+.black-arrow {
+    color: #0e0e0e;
+}
+.input-group-btn{
+    padding-left: 15px;
+}
+.mt-25{
+    margin-top: 25px;
+}
+#search_bt{
+    display: none;
 }

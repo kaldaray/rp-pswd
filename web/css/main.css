@@ -1,0 +1,8 @@
+.block_for_input input {
+    width: 100%;
+}
+#block_check {
+    height: 5px;
+    margin-top: 5px;
+    transition: 1s;
+}

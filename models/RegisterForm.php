@@ -28,9 +28,44 @@ class RegisterForm extends Model
             ['email', 'unique',  'targetClass' => User::className(),  'message' => 'Эта электронная почта занята'],
             [['email'], 'string', 'max' => 70],
             ['email', 'email', 'message' => 'Не соответствует типу Электронная почта'],
+            ['secret_key', 'unique'],
         ];
     }
 
+    public static function isSecretKeyExpire($key)
+    {
+        if (empty($key))
+        {
+            return false;
+        }
+        $expire = Yii::$app->params['secretKeyExpire'];
+        $parts = explode('_', $key);
+        $timestamp = (int) end($parts);
+
+        return $timestamp + $expire >= time();
+    }
+
+    public static function findBySecretKey($key)
+    {
+        if (!static::isSecretKeyExpire($key))
+        {
+            return null;
+        }
+        return static::findOne([
+            'secret_key' => $key,
+        ]);
+    }
+
+    /* Хелперы */
+    public function generateSecretKey()
+    {
+        $this->secret_key = Yii::$app->security->generateRandomString().'_'.time();
+    }
+
+    public function removeSecretKey()
+    {
+        $this->secret_key = null;
+    }
 
     public function attributeLabels() {
         return [

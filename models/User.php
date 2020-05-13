@@ -2,10 +2,18 @@
 
 namespace app\models;
 
+use Yii;
+use yii\base\Exception;
 use yii\db\ActiveRecord;
 
 class User extends ActiveRecord  implements \yii\web\IdentityInterface
 {
+    const STATUS_ACTIVE = 10;
+    public static function tableName()
+    {
+        return 'user';
+    }
+
     public static function findIdentity($id)
     {
         return static::findOne($id);
@@ -62,5 +70,48 @@ class User extends ActiveRecord  implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return \Yii::$app->security->validatePassword($password, $this->password);
+    }
+
+    public static function isSecretKeyExpire($key)
+    {
+        if (empty($key))
+        {
+            return false;
+        }
+        $expire = Yii::$app->params['secretKeyExpire'];
+        $parts = explode('_', $key);
+        $timestamp = (int) end($parts);
+
+        return $timestamp + $expire >= time();
+    }
+
+    public static function findBySecretKey($key)
+    {
+        if (!static::isSecretKeyExpire($key))
+        {
+            return null;
+        }
+        return static::findOne([
+            'secret_key' => $key,
+        ]);
+    }
+
+    /* Хелперы */
+    public function generateSecretKey()
+    {
+        try {
+            $this->secret_key = Yii::$app->security->generateRandomString() . '_' . time();
+        } catch (Exception $e) {
+        }
+    }
+
+    public function removeSecretKey()
+    {
+        $this->secret_key = null;
+    }
+
+    public function setPassword($password)
+    {
+        $this->password = Yii::$app->security->generatePasswordHash($password);
     }
 }
