@@ -4,7 +4,6 @@
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\helpers\Url;
 $this->title='Создание записи с банковской картой';
 ?>
 <h1>Создание новой записи с паролем</h1>

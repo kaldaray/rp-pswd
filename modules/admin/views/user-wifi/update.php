@@ -34,7 +34,7 @@ $this->title='Редактирование записи с беспроводн�
 
     <div class="row">
         <div class="col-md-10 col-xs-10">
-            <?php echo Html::activeInput('', $model, 'nameUser', ['class' => 'form-control js-copytextarea"', 'maxlength' => 255, 'id' => '1']); ?>
+            <?php echo Html::activeInput('', $model, 'nameUser', ['class' => 'form-control js-copytextarea"', 'maxlength' => 255, 'id' => '1', 'data-id' => '1']); ?>
         </div>
         <div class="col-xs-2">
             <?php
@@ -57,11 +57,12 @@ $this->title='Редактирование записи с беспроводн�
 
     <div class="row">
         <div class="col-md-10 col-xs-10">
-            <?php echo Html::activePasswordInput($model, 'passwordWifi', ['class' => 'form-control pwd', 'maxlength' => 255, 'id' => '2']); ?>
+            <?php echo Html::activePasswordInput($model, 'passwordWifi', ['class' => 'form-control pwd2', 'maxlength' => 255, 'id' => '2']); ?>
         </div>
         <div class="col-xs-2">
             <?php
-            echo Html::tag('span', Html::button('<i class="glyphicon glyphicon-eye-open"></i>', ['class' => 'btn btn-default reveal']),
+            echo Html::tag('span', Html::button('<i class="glyphicon glyphicon-eye-open"></i>', ['class' => 'btn btn-default reveal',
+                'data-id' => '2']),
                 ['class' => 'input-group-btn']);
             echo
             Html::tag('span', Html::button('<i class="far fa-copy "></i>', ['class' => 'btn btn-default reveal js-textareacopybtn',
@@ -84,11 +85,13 @@ $this->title='Редактирование записи с беспроводн�
 
     <div class="row">
         <div class="col-md-10 col-xs-10">
-            <?php echo Html::activePasswordInput($model, 'startPage', ['class' => 'form-control pwd', 'maxlength' => 255, 'id' => '3']); ?>
+            <?php echo Html::activePasswordInput($model, 'startPage', ['class' => 'form-control pwd3', 'maxlength' => 255, 'id' => '3']); ?>
         </div>
         <div class="col-xs-2">
             <?php
-            echo Html::tag('span', Html::button('<i class="glyphicon glyphicon-eye-open"></i>', ['class' => 'btn btn-default reveal']),
+            echo
+            Html::tag('span', Html::button('<i class="glyphicon glyphicon-eye-open"></i>', ['class' => 'btn btn-default reveal',
+                'data-id' => '3']),
                 ['class' => 'input-group-btn']);
             echo
             Html::tag('span', Html::button('<i class="far fa-copy "></i>', ['class' => 'btn btn-default reveal js-textareacopybtn',
@@ -131,8 +134,19 @@ $this->title='Редактирование записи с беспроводн�
     <?php ActiveForm::end(); ?>
 </div>
 <?php
+$this->registerJs("$('.js-textareacopybtn').on('click', function (event) {
+        var copyTextarea = $(this).data('id');
+        $('#' + copyTextarea)[0].select();
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+    });");
 $this->registerJs("$(\".reveal\").on('click',function() {
-        var pwd = $(\".pwd\");
+        var pwd = $(\".pwd\"+$(this).data('id'));
         if (pwd.attr('type') === 'password') {
             pwd.attr('type', 'text');
         } else {
